@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pasticceria Zuccherina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FCE8EE; --surface:#FFFFFF; --ink:#4A2C21; --soft:#8A6A5E; --berry:#D6336C; --berry-ink:#FFFFFF;
+  --stripe:#FFF7F9; --pist:#8FC15C; --pist-ink:#1F2A12; --line:#F2C6D3; --paper:#FFFDF7; --shadow:0 3px 0 #E7B3C3;
+  color-scheme:light;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#2A1A1F; --surface:#3A252B; --ink:#FBE9EE; --soft:#D3B3BC; --berry:#F06292; --berry-ink:#2A1A1F;
+    --stripe:#F8DCE5; --pist:#A5D27A; --pist-ink:#1F2A12; --line:#5A3A43; --paper:#43302F; --shadow:0 3px 0 #1C1013;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#2A1A1F; --surface:#3A252B; --ink:#FBE9EE; --soft:#D3B3BC; --berry:#F06292; --berry-ink:#2A1A1F;
+  --stripe:#F8DCE5; --pist:#A5D27A; --pist-ink:#1F2A12; --line:#5A3A43; --paper:#43302F; --shadow:0 3px 0 #1C1013;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Baloo 2",ui-rounded,"Segoe UI Rounded","Trebuchet MS",system-ui,sans-serif;font-size:17px;line-height:1.45}
+img,svg{max-width:100%}
+
+.awning{height:64px;position:relative;background:repeating-linear-gradient(90deg,var(--berry) 0 44px,var(--stripe) 44px 88px)}
+.awning::after{content:"";position:absolute;left:0;right:0;bottom:-22px;height:22px;
+  background:
+    radial-gradient(circle at 22px 0,var(--berry) 21px,transparent 22px) 0 0/88px 22px repeat-x,
+    radial-gradient(circle at 22px 0,var(--stripe) 21px,transparent 22px) 44px 0/88px 22px repeat-x}
+
+header.sign{max-width:1100px;margin:38px auto 0;padding:0 18px;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+.sign h1{margin:0;font-size:clamp(2rem,6vw,3.2rem);font-weight:800;line-height:1;color:var(--berry);letter-spacing:-.01em}
+.sign p{margin:4px 0 0;color:var(--soft)}
+.stats{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+a.btn{text-decoration:none}
+.stat{background:var(--surface);border:2px solid var(--line);border-radius:999px;padding:4px 14px;font-weight:600;box-shadow:var(--shadow)}
+
+main{max-width:1100px;margin:22px auto;padding:0 18px;display:grid;grid-template-columns:290px 1fr;gap:22px;align-items:start}
+@media (max-width:820px){main{grid-template-columns:1fr}}
+
+.ticket{background:var(--paper);border:2px dashed var(--line);border-radius:6px;padding:16px 18px;transform:rotate(-1deg);position:relative}
+.ticket::before{content:"";position:absolute;top:-10px;left:50%;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:var(--berry);box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.cust{font-size:52px;line-height:1;text-align:center}
+.who{text-align:center;font-weight:800;font-size:1.2rem;margin:4px 0 6px}
+.speech{margin:0 0 12px;color:var(--soft)}
+.req{list-style:none;margin:0;padding:0;border-top:2px dashed var(--line)}
+.req li{display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:1px dotted var(--line)}
+.mark{flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:.9rem;border:2px solid var(--line);color:var(--soft)}
+.mark.ok{background:var(--pist);border-color:var(--pist);color:var(--pist-ink)}
+.mark.no{background:var(--berry);border-color:var(--berry);color:var(--berry-ink)}
+.mark.half{background:#F0C987;border-color:#F0C987;color:#4A2C21}
+.req .count{margin-left:auto;color:var(--soft);font-size:.9rem}
+
+.stage{background:var(--surface);border:3px solid var(--line);border-radius:24px;padding:20px}
+.steps{list-style:none;display:flex;gap:6px;margin:0 0 16px;padding:0;flex-wrap:wrap}
+.steps li{padding:2px 12px;border-radius:999px;color:var(--soft);border:2px solid var(--line);font-weight:600;font-size:.95rem}
+.steps li.on{background:var(--berry);color:var(--berry-ink);border-color:var(--berry)}
+.steps li.done{background:var(--pist);color:var(--pist-ink);border-color:var(--pist)}
+.stage h2{margin:0;font-size:1.7rem;font-weight:800;line-height:1.15}
+.hint{color:var(--soft);margin:4px 0 14px;max-width:60ch}
+h3{margin:14px 0 6px;font-size:1.05rem}
+
+.btn{font:inherit;font-weight:600;color:var(--ink);background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:6px 14px;cursor:pointer;box-shadow:var(--shadow);transition:transform .08s}
+.btn:active{transform:translateY(2px);box-shadow:none}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn[aria-pressed="true"]{background:var(--pist);border-color:var(--pist);color:var(--pist-ink)}
+.btn.primary{background:var(--berry);border-color:var(--berry);color:var(--berry-ink);font-size:1.1rem;padding:8px 20px}
+.btn:focus-visible,.swatch:focus-visible{outline:3px solid var(--pist);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+
+.bowlwrap{position:relative;width:240px;margin:18px auto 8px;padding-top:30px}
+.spoon{position:absolute;top:0;right:24px;font-size:40px;transform-origin:50% 90%}
+.spoon.stir{animation:stir .35s ease-in-out}
+@keyframes stir{0%{transform:rotate(0)}40%{transform:rotate(-35deg)}80%{transform:rotate(20deg)}100%{transform:rotate(0)}}
+.bowl{width:240px;height:120px;border-radius:0 0 120px 120px;background:#A9D3EE;border:5px solid #6FA5C9;border-top-width:8px;position:relative;overflow:hidden}
+.batter{position:absolute;left:0;right:0;bottom:0;transition:height .3s,background .3s}
+.bits{position:absolute;inset:0;display:flex;flex-wrap:wrap;justify-content:center;align-content:flex-end;gap:2px;font-size:30px;padding:0 30px 14px}
+.drop{animation:drop .45s ease-out}
+@keyframes drop{from{transform:translateY(-90px);opacity:0}}
+.bar{height:16px;border-radius:8px;background:var(--line);overflow:hidden;max-width:320px;margin:10px auto 0}
+.bar span{display:block;height:100%;background:var(--pist);transition:width .2s}
+
+.oven{width:min(300px,100%);margin:10px auto;background:#B7BCC3;border:4px solid #8A9099;border-radius:18px;padding:12px}
+.knobs{display:flex;gap:10px;justify-content:flex-end;margin-bottom:8px}
+.knobs i{width:16px;height:16px;border-radius:50%;background:#5E646C;display:block}
+.window{background:#2A2A2E;border-radius:12px;height:150px;position:relative;overflow:hidden;transition:box-shadow .4s}
+.window.hot{box-shadow:inset 0 0 50px #FF8A3D}
+.window svg{width:100%;height:100%}
+.smoke{position:absolute;top:8px;left:50%;font-size:40px;transform:translateX(-50%);animation:puff 1.2s infinite}
+@keyframes puff{50%{opacity:.4;transform:translate(-50%,-6px)}}
+.meter{position:relative;height:24px;border-radius:12px;max-width:420px;margin:18px auto 4px;
+  background:linear-gradient(90deg,#F6E7C8 0 40%,#F0C987 40% 58%,#7FC35A 58% 78%,#C98A4A 78% 88%,#5A3220 88% 100%)}
+.needle{position:absolute;top:-7px;bottom:-7px;width:6px;margin-left:-3px;border-radius:3px;background:var(--ink)}
+.scale{display:flex;justify-content:space-between;max-width:420px;margin:0 auto;color:var(--soft);font-size:.9rem}
+.result{text-align:center;font-weight:800;font-size:1.25rem;margin:12px 0 0}
+
+.decor{display:grid;grid-template-columns:1fr 280px;gap:18px}
+@media (max-width:980px){.decor{grid-template-columns:1fr}}
+.cakebox{background:var(--paper);border-radius:18px;border:2px solid var(--line);cursor:crosshair;touch-action:manipulation;display:block;width:100%;height:auto}
+.swatch{width:38px;height:38px;border-radius:50%;border:3px solid var(--line);cursor:pointer;padding:0}
+.swatch[aria-pressed="true"]{border-color:var(--berry);box-shadow:0 0 0 3px var(--surface),0 0 0 6px var(--berry)}
+.swatch.none{background:repeating-linear-gradient(45deg,var(--surface) 0 5px,var(--line) 5px 10px)}
+.tops{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.tops .btn{font-size:24px;padding:4px 0}
+.tip{color:var(--soft);font-size:.95rem;margin:6px 0 0;text-align:center}
+
+.deliver{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+@media (max-width:700px){.deliver{grid-template-columns:1fr}}
+.stars{font-size:2.4rem;color:#F2B01E;letter-spacing:.05em;line-height:1}
+.stars .off{color:var(--line)}
+.react{font-size:1.2rem;font-weight:600;margin:6px 0}
+.earn{display:inline-block;background:var(--pist);color:var(--pist-ink);border-radius:999px;padding:2px 14px;font-weight:800;margin-top:6px}
+
+.market{max-width:1100px;margin:30px auto 0;padding:0 18px}
+.market h2{font-size:1.6rem;margin:0;font-weight:800}
+.mgroup h3{margin:16px 0 8px}
+.goods{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.good{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.good .ico{font-size:30px;line-height:1.1}
+.good .ico i{display:inline-block;width:30px;height:30px;border-radius:50%;border:2px solid var(--line);vertical-align:middle}
+.good b{font-size:1rem}
+.good small{color:var(--soft);line-height:1.3}
+.good .btn{margin-top:auto;align-self:flex-start}
+.good.own{border-style:dashed}
+.owned{color:var(--pist);font-weight:800;margin-top:auto}
+.pop{animation:pop .35s ease-out}
+@keyframes pop{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.2)}}
+.shop{max-width:1100px;margin:30px auto 40px;padding:0 18px}
+.shop h2{font-size:1.6rem;margin:0 0 4px;font-weight:800}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:12px}
+.mini{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:8px;text-align:center}
+.mini p{margin:2px 0 0;font-size:.9rem}
+.mini .s{color:#F2B01E}
+.foot{display:flex;justify-content:flex-end;margin-top:16px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="awning" aria-hidden="true"></div>
+<header class="sign">
+  <div>
+    <h1>Pasticceria Zuccherina</h1>
+    <p>Prepara, inforna e decora le torte che i clienti ordinano.</p>
+  </div>
+  <div class="stats"><span id="stats" class="stats"></span><a class="btn" href="#market">🛍️ Negozio</a></div>
+</header>
+<main>
+  <aside class="ticket" id="ticket" aria-live="polite"></aside>
+  <section class="stage" id="stage"></section>
+</main>
+<section class="market" id="market"></section>
+<section class="shop">
+  <h2>La tua vetrina</h2>
+  <div class="gallery" id="gallery"></div>
+  <div class="foot"><button class="btn" data-act="reset" id="resetBtn">Ricomincia da capo</button></div>
+</section>
+
+<script>
+const KEY='pasticceria-zuccherina-v1';
+const FL={
+  vaniglia:{name:'Vaniglia',prep:'alla vaniglia',color:'#F3D9A4',ing:'🌼',ingName:'Vaniglia'},
+  cioccolato:{name:'Cioccolato',prep:'al cioccolato',color:'#7B4A2E',ing:'🍫',ingName:'Cacao'},
+  fragola:{name:'Fragola',prep:'alla fragola',color:'#F4A7B5',ing:'🍓',ingName:'Fragole'},
+  pistacchio:{name:'Pistacchio',prep:'al pistacchio',color:'#B9D58C',ing:'🥜',ingName:'Pistacchi'},
+  limone:{name:'Limone',prep:'al limone',color:'#FFF0A0',ing:'🍋',ingName:'Limoni',price:80},
+  redvelvet:{name:'Red velvet',prep:'red velvet',color:'#A8323A',ing:'❤️',ingName:'Barbabietola',price:120}
+};
+const FR={
+  panna:{name:'Panna',phrase:'glassa alla panna',color:'#FFF6EC'},
+  rosa:{name:'Rosa',phrase:'glassa rosa',color:'#F7A8C4'},
+  cioccolato:{name:'Cioccolato',phrase:'glassa al cioccolato',color:'#5C3A24'},
+  menta:{name:'Menta',phrase:'glassa alla menta',color:'#A8E6CF'},
+  lilla:{name:'Lilla',phrase:'glassa lilla',color:'#C9B6F2'},
+  limone:{name:'Limone',phrase:'glassa al limone',color:'#FFE680'},
+  azzurro:{name:'Azzurro',phrase:'glassa azzurra',color:'#A7D8F5',price:60},
+  arancia:{name:'Arancia',phrase:"glassa all'arancia",color:'#FFC48A',price:60},
+  oro:{name:'Oro',phrase:'glassa dorata',color:'#E8C25A',price:120}
+};
+const TOPS={
+  fragola:{e:'🍓',n:'fragole'}, ciliegia:{e:'🍒',n:'ciliegie'}, mirtillo:{e:'🫐',n:'mirtilli'},
+  kiwi:{e:'🥝',n:'fette di kiwi'}, stella:{e:'⭐',n:'stelline'}, fiore:{e:'🌸',n:'fiori'},
+  candela:{e:'🕯️',n:'candeline'}, biscotto:{e:'🍪',n:'biscotti'}, cuore:{e:'💗',n:'cuoricini'}, lecca:{e:'🍭',n:'lecca-lecca'},
+  ciambella:{e:'🍩',n:'ciambelline',price:40}, caramella:{e:'🍬',n:'caramelle',price:40}, banana:{e:'🍌',n:'banane',price:40},
+  cioccolatino:{e:'🍫',n:'quadretti di cioccolato',price:50}, arcobaleno:{e:'🌈',n:'arcobaleni',price:80},
+  corona:{e:'👑',n:'corone',price:100}, unicorno:{e:'🦄',n:'unicorni',price:150}
+};
+const PLATES={
+  bianco:{name:'Piatto bianco',fill:'#EDE7EA',stroke:'#C9BEC3'},
+  rosa:{name:'Piatto rosa',fill:'#F9C9D8',stroke:'#E29AB2',price:50},
+  legno:{name:'Tagliere di legno',fill:'#C99A6B',stroke:'#9A6E44',price:70},
+  oro:{name:'Piatto dorato',fill:'#F1D27A',stroke:'#C9A23E',price:120}
+};
+const TOOLS={
+  mixer:{e:'🌀',name:'Sbattitore elettrico',desc:'Mescoli l\u2019impasto in pochi tocchi.',price:100},
+  forno:{e:'🔥',name:'Forno professionale',desc:'La lancetta va più piano: sfornare al punto giusto è più facile.',price:150},
+  mance:{e:'🫙',name:'Barattolo delle mance',desc:'Le mance dei clienti raddoppiano.',price:200}
+};
+const SHOP=[['top','Decorazioni',TOPS],['fr','Glasse',FR],['fl','Gusti',FL],['plate','Piatti',PLATES],['tool','Attrezzi',TOOLS]];
+function owns(kind,id,obj){return !obj.price||save.owned.includes(kind+':'+id)}
+const ownedKeys=(kind,tab)=>Object.keys(tab).filter(k=>owns(kind,k,tab[k]));
+const hasTool=k=>save.owned.includes('tool:'+k);
+const INGS=[['farina','🌾','Farina'],['uova','🥚','Uova'],['zucchero','🍬','Zucchero'],['burro','🧈','Burro'],['gusto',null,null]];
+const CUSTOMERS=[['👵','Nonna Pina'],['👦','Tommaso'],['👧','Giulia'],['👨','Signor Bruno'],['👩','Martina'],['🧓','Zio Franco'],['🤵','Lo sposo'],['👰','La sposa'],['🧑‍🎓','Chiara'],['👮','Il vigile Mario'],['🧑‍🍳','Lo chef rivale'],['🐶','Fido (sì, un cane)']];
+const OCC=['il mio compleanno','una festa a sorpresa','la merenda','un anniversario','la festa della scuola','una domenica speciale'];
+const SPR=['#FF6B9A','#FFD23F','#4ECDC4','#7B61FF','#FFFFFF','#FF8C42'];
+const STEPS=['Impasto','Forno','Decorazione','Consegna'];
+
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const ri=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+function hex2rgb(h){h=h.replace('#','');return [0,2,4].map(i=>parseInt(h.slice(i,i+2),16))}
+function mix(a,b,t){const A=hex2rgb(a),B=hex2rgb(b);return '#'+A.map((v,i)=>Math.round(v+(B[i]-v)*t).toString(16).padStart(2,'0')).join('')}
+
+let save={coins:0,served:0,gallery:[],owned:[]};
+try{const r=localStorage.getItem(KEY); if(r) save=Object.assign(save,JSON.parse(r)); if(!Array.isArray(save.gallery)) save.gallery=[]; if(!Array.isArray(save.owned)) save.owned=[];}catch(e){}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(save))}catch(e){}}
+
+let S;
+function makeOrder(){
+  const [emoji,name]=rnd(CUSTOMERS);
+  const keys=ownedKeys('top',TOPS); const n=Math.random()<.5?1:2; const picks=[];
+  while(picks.length<n){const t=rnd(keys); if(!picks.includes(t)) picks.push(t)}
+  return {emoji,name,occ:rnd(OCC),flavor:rnd(ownedKeys('fl',FL)),tiers:ri(1,3),frosting:rnd(ownedKeys('fr',FR)),drip:Math.random()<.4,tops:picks.map(t=>({t,n:ri(2,5)}))};
+}
+function newRound(){
+  S={order:makeOrder(),cake:{flavor:null,tiers:null,bake:null,frosting:null,drip:false,items:[],sprinkles:[],plate:save.plate||'bianco'},
+     step:0,added:[],last:null,mix:0,stir:false,oven:{running:false,level:0,done:false},tool:'fragola',result:null,hist:[]};
+  render();
+}
+
+function bakeQ(l){
+  if(l==null) return null;
+  if(l<40) return {name:'cruda',score:0};
+  if(l<58) return {name:'un po\u2019 pallida',score:.5};
+  if(l<78) return {name:'perfetta',score:1};
+  if(l<88) return {name:'molto scura',score:.5};
+  return {name:'bruciata',score:0};
+}
+function bakeColor(f,l){
+  const base=FL[f||'vaniglia'].color;
+  if(l==null) return mix(base,'#ffffff',.45);
+  if(l<60) return mix(base,'#ffffff',.5*(1-l/60));
+  if(l<=78) return base;
+  return mix(base,'#2B1A10',Math.min(.8,(l-78)/22*.8));
+}
+function tierGeo(n){
+  const W=[220,170,120],H=52,out=[]; let y=222;
+  for(let i=0;i<n;i++){const w=W[i];const top=y-H;out.push({x:150-w/2,top,w,h:H});y=top}
+  return out;
+}
+function drawCake(c,withItems=true){
+  const P=PLATES[c.plate]||PLATES.bianco;
+  let s=`<ellipse cx="150" cy="226" rx="138" ry="15" fill="${P.fill}" stroke="${P.stroke}" stroke-width="2"/>`;
+  const n=c.tiers||1;
+  const body=c.frosting?FR[c.frosting].color:bakeColor(c.flavor,c.bake);
+  const edge=mix(body,'#000000',.2);
+  tierGeo(n).forEach((g,i)=>{
+    s+=`<rect x="${g.x}" y="${g.top}" width="${g.w}" height="${g.h}" rx="9" fill="${body}" stroke="${edge}" stroke-width="2"/>`;
+    if(!c.frosting){
+      s+=`<rect x="${g.x+2}" y="${g.top+g.h/2-3}" width="${g.w-4}" height="6" fill="#FFF6EC" opacity=".9"/>`;
+    }else{
+      s+=`<rect x="${g.x+4}" y="${g.top+2}" width="${g.w-8}" height="7" rx="4" fill="${mix(body,'#ffffff',.35)}"/>`;
+      if(c.drip){
+        const dc=c.frosting==='cioccolato'?'#FFF3E4':'#6B3F27';
+        s+=`<rect x="${g.x}" y="${g.top}" width="${g.w}" height="10" rx="6" fill="${dc}"/>`;
+        const k=Math.round(g.w/24);
+        for(let j=0;j<=k;j++){
+          const dx=g.x+8+j*(g.w-16)/k; const len=6+((j*7+i*5)%5)*4;
+          s+=`<rect x="${dx-4}" y="${g.top+4}" width="8" height="${len+6}" rx="4" fill="${dc}"/>`;
+        }
+      }
+    }
+  });
+  if(withItems){
+    c.sprinkles.forEach(p=>{s+=`<rect x="${p.x}" y="${p.y}" width="7" height="2.6" rx="1.3" fill="${p.c}" transform="rotate(${p.r} ${p.x+3.5} ${p.y+1.3})"/>`});
+    c.items.forEach((it,i)=>{s+=`<text class="${withItems==='live'&&i===c.items.length-1&&S.justAdded?'pop':''}" style="transform-origin:${it.x}px ${it.y}px;transform-box:view-box" x="${it.x}" y="${it.y}" font-size="26" text-anchor="middle" dominant-baseline="central">${TOPS[it.t].e}</text>`});
+  }
+  return s;
+}
+
+function checks(o,c){
+  const cnt=t=>c.items.filter(i=>i.t===t).length;
+  const L=[];
+  L.push({label:`Torta ${FL[o.flavor].prep}`,ok:c.flavor==null?null:c.flavor===o.flavor,v:c.flavor===o.flavor?1:0});
+  L.push({label:`${o.tiers} ${o.tiers>1?'piani':'piano'}`,ok:c.tiers==null?null:c.tiers===o.tiers,v:c.tiers===o.tiers?1:0});
+  const fOk=c.frosting===o.frosting&&(!o.drip||c.drip);
+  L.push({label:FR[o.frosting].phrase+(o.drip?' con colata':''),ok:c.frosting==null?null:fOk,v:fOk?1:0});
+  let tv=0;
+  o.tops.forEach(r=>{const k=cnt(r.t);tv+=Math.min(k/r.n,1)/o.tops.length;
+    L.push({label:`${r.n} ${TOPS[r.t].n} ${TOPS[r.t].e}`,ok:k>=r.n?true:null,count:`${Math.min(k,r.n)}/${r.n}`,v:0})});
+  const q=bakeQ(c.bake);
+  L.push({label:'Cottura perfetta',ok:q==null?null:(q.score===1?true:q.score===.5?'half':false),v:q?q.score:0,sub:q?q.name:''});
+  return {list:L,points:L.reduce((a,b)=>a+b.v,0)+tv};
+}
+
+function markHTML(ok){
+  if(ok===true) return '<span class="mark ok" aria-label="fatto">✓</span>';
+  if(ok===false) return '<span class="mark no" aria-label="sbagliato">✕</span>';
+  if(ok==='half') return '<span class="mark half" aria-label="quasi">½</span>';
+  return '<span class="mark" aria-label="da fare">·</span>';
+}
+function renderTicket(){
+  const o=S.order; const ch=checks(o,S.cake);
+  const tops=o.tops.map(r=>`${r.n} ${TOPS[r.t].n}`).join(' e ');
+  $('#ticket').innerHTML=`<div class="cust" aria-hidden="true">${o.emoji}</div>
+    <p class="who">${o.name}</p>
+    <p class="speech">«Per ${o.occ} vorrei una torta ${FL[o.flavor].prep} a ${o.tiers} ${o.tiers>1?'piani':'piano'}, con ${FR[o.frosting].phrase}${o.drip?' e la colata sopra':''}, e ${tops}.»</p>
+    <ul class="req">${ch.list.map(l=>`<li>${markHTML(l.ok)}<span>${l.label}${l.sub?` <small>(${l.sub})</small>`:''}</span>${l.count?`<span class="count">${l.count}</span>`:''}</li>`).join('')}</ul>`;
+}
+function $(s){return document.querySelector(s)}
+
+function stepsHTML(){
+  return `<ol class="steps">${STEPS.map((n,i)=>`<li class="${i===S.step?'on':i<S.step?'done':''}">${i+1}. ${n}</li>`).join('')}</ol>`;
+}
+
+function renderImpasto(){
+  const c=S.cake; const allIn=INGS.every(i=>S.added.includes(i[0]));
+  const batterH=S.added.length*12+(S.mix>0?20:0);
+  const batterCol=c.flavor?mix('#FFF4DC',FL[c.flavor].color,S.mix/100):'#FFF4DC';
+  const bits=S.mix>=100?'':S.added.map(k=>{const ing=INGS.find(i=>i[0]===k);const e=k==='gusto'?FL[c.flavor].ing:ing[1];return `<span class="${k===S.last?'drop':''}">${e}</span>`}).join('');
+  return `${stepsHTML()}<h2>Prepara l'impasto</h2>
+  <p class="hint">Scegli il gusto, metti tutti gli ingredienti nella ciotola e poi mescola finché l'impasto è liscio.</p>
+  <h3>Gusto</h3>
+  <div class="row">${Object.entries(FL).filter(([k,f])=>owns('fl',k,f)).map(([k,f])=>`<button class="btn" data-act="flavor" data-v="${k}" aria-pressed="${c.flavor===k}" ${S.mix>0?'disabled':''}>${f.ing} ${f.name}</button>`).join('')}</div>
+  <h3>Ingredienti</h3>
+  <div class="row">${INGS.map(([k,e,n])=>{
+    if(k==='gusto'){e=c.flavor?FL[c.flavor].ing:'❔';n=c.flavor?FL[c.flavor].ingName:'Scegli un gusto'}
+    const dis=S.added.includes(k)||(k==='gusto'&&!c.flavor);
+    return `<button class="btn" data-act="ing" data-v="${k}" ${dis?'disabled':''}>${e} ${n}</button>`}).join('')}</div>
+  <div class="bowlwrap" aria-hidden="true">
+    <div class="spoon ${S.stir?'stir':''}">🥄</div>
+    <div class="bowl"><div class="batter" style="height:${Math.min(batterH,95)}%;background:${batterCol}"></div><div class="bits">${bits}</div></div>
+  </div>
+  <div class="bar" role="progressbar" aria-label="Impasto mescolato" aria-valuenow="${S.mix}" aria-valuemin="0" aria-valuemax="100"><span style="width:${S.mix}%"></span></div>
+  <div class="actions" style="justify-content:center">
+    <button class="btn" data-act="mix" ${!allIn||S.mix>=100?'disabled':''}>🥄 Mescola (${S.mix}%)</button>
+    <button class="btn primary" data-act="toOven" ${S.mix<100?'disabled':''}>Versa nella teglia</button>
+  </div>`;
+}
+
+function renderForno(){
+  const c=S.cake,o=S.oven; const q=o.done?bakeQ(o.level):null;
+  return `${stepsHTML()}<h2>Cuoci nel forno</h2>
+  <p class="hint">Scegli quanti piani fare, accendi il forno e sforna quando la lancetta è nella zona verde. Se aspetti troppo la torta brucia!</p>
+  <h3>Quanti piani?</h3>
+  <div class="row">${[1,2,3].map(n=>`<button class="btn" data-act="tiers" data-v="${n}" aria-pressed="${c.tiers===n}" ${o.running||o.done?'disabled':''}>${'🎂'.repeat(n)} ${n} ${n>1?'piani':'piano'}</button>`).join('')}</div>
+  <div class="oven"><div class="knobs" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="window ${o.running?'hot':''}" id="ovenWin">
+      <svg viewBox="0 0 200 120" aria-hidden="true">
+        <rect x="20" y="104" width="160" height="5" rx="2" fill="#777"/>
+        ${[0,1,2].slice(0,c.tiers||1).map(i=>`<rect class="ovc" x="${42+i*0}" y="0" width="116" height="0" rx="6"/>`).join('')}
+      </svg>
+      ${q&&q.name==='bruciata'?'<div class="smoke">💨</div>':''}
+    </div></div>
+  <div class="meter"><div class="needle" id="needle" style="left:${o.level}%"></div></div>
+  <div class="scale" aria-hidden="true"><span>cruda</span><span>perfetta</span><span>bruciata</span></div>
+  ${q?`<p class="result">La torta è ${q.name}! ${q.score===1?'🌟':q.score===.5?'🙂':'😬'}</p>`:''}
+  <div class="actions" style="justify-content:center">
+    ${!o.running&&!o.done?`<button class="btn primary" data-act="ovenStart" ${c.tiers?'':'disabled'}>🔥 Accendi il forno</button>`:''}
+    ${o.running?`<button class="btn primary" data-act="ovenStop">🧤 Sforna!</button>`:''}
+    ${o.done?`<button class="btn" data-act="ovenRetry">Rifai la cottura</button><button class="btn primary" data-act="toDecor">Passa alla decorazione</button>`:''}
+  </div>`;
+}
+function updateOven(){
+  const c=S.cake,l=S.oven.level; const col=bakeColor(c.flavor,l);
+  const h=Math.round(16+14*Math.min(l,70)/70);
+  const els=document.querySelectorAll('.ovc'); let y=104;
+  const W=[116,92,68];
+  els.forEach((e,i)=>{const hh=h;y-=hh;e.setAttribute('y',y);e.setAttribute('height',hh);e.setAttribute('x',100-W[i]/2);e.setAttribute('width',W[i]);e.setAttribute('fill',col)});
+  const nd=$('#needle'); if(nd) nd.style.left=l+'%';
+}
+let raf=null,lastT=0;
+function ovenLoop(t){
+  if(!S.oven.running) return;
+  if(lastT) S.oven.level=Math.min(100,S.oven.level+(t-lastT)/(hasTool('forno')?95:55));
+  lastT=t; updateOven();
+  if(S.oven.level>=100){finishOven();return}
+  raf=requestAnimationFrame(ovenLoop);
+}
+function finishOven(){S.oven.running=false;S.oven.done=true;S.cake.bake=S.oven.level;cancelAnimationFrame(raf);render()}
+
+function renderDecor(){
+  const c=S.cake;
+  return `${stepsHTML()}<h2>Decora la torta</h2>
+  <p class="hint">Scegli la glassa, poi tocca una decorazione per metterla sulla torta. Puoi anche toccare la torta per appoggiarne un’altra proprio in quel punto.</p>
+  <div class="decor">
+    <div>
+      <svg class="cakebox" id="cakeSvg" viewBox="0 0 300 250" role="img" aria-label="La tua torta, tocca per decorare">${drawCake(c,'live')}</svg>
+      <p class="tip">Selezionata: ${TOPS[S.tool].e} ${TOPS[S.tool].n}. Tocca la torta per aggiungerne altre.</p>
+    </div>
+    <div>
+      <h3>Glassa</h3>
+      <div class="row">
+        <button class="swatch none" data-act="frost" data-v="" aria-pressed="${!c.frosting}" title="Senza glassa" aria-label="Senza glassa"></button>
+        ${Object.entries(FR).filter(([k,f])=>owns('fr',k,f)).map(([k,f])=>`<button class="swatch" data-act="frost" data-v="${k}" aria-pressed="${c.frosting===k}" style="background:${f.color}" title="${f.name}" aria-label="Glassa ${f.name}"></button>`).join('')}
+      </div>
+      <div class="row" style="margin-top:10px"><button class="btn" data-act="drip" aria-pressed="${c.drip}" ${c.frosting?'':'disabled'}>🫗 Colata</button>
+      <button class="btn" data-act="sprinkles">✨ Codette</button></div>
+      <h3>Decorazioni</h3>
+      <div class="tops">${Object.entries(TOPS).filter(([k,t])=>owns('top',k,t)).map(([k,t])=>`<button class="btn" data-act="tool" data-v="${k}" aria-pressed="${S.tool===k}" title="${t.n}" aria-label="${t.n}">${t.e}</button>`).join('')}</div>
+      ${ownedKeys('plate',PLATES).length>1?`<h3>Piatto</h3><div class="row">${ownedKeys('plate',PLATES).map(k=>`<button class="swatch" data-act="plate" data-v="${k}" aria-pressed="${c.plate===k}" style="background:${PLATES[k].fill}" title="${PLATES[k].name}" aria-label="${PLATES[k].name}"></button>`).join('')}</div>`:''}
+      <div class="row" style="margin-top:10px">
+        <button class="btn" data-act="undo" ${c.items.length||c.sprinkles.length?'':'disabled'}>↶ Annulla</button>
+        <button class="btn" data-act="clearDeco" ${c.items.length||c.sprinkles.length?'':'disabled'}>Togli tutto</button>
+      </div>
+      <div class="actions"><button class="btn primary" data-act="deliver">🛎️ Consegna la torta</button></div>
+    </div>
+  </div>`;
+}
+
+const REACT=['Ehm… questa non è proprio la mia torta.','Mmm, non è quello che avevo chiesto.','Carina, ma manca qualcosa.','Buona! Quasi perfetta.','Bellissima, grazie!','Meravigliosa! È esattamente quella che sognavo!'];
+const FACE=['😞','😕','😐','🙂','😄','🤩'];
+function renderConsegna(){
+  const r=S.result;
+  return `${stepsHTML()}<h2>Consegna</h2>
+  <div class="deliver">
+    <svg class="cakebox" style="cursor:default" viewBox="0 0 300 250" role="img" aria-label="La torta consegnata">${drawCake(S.cake)}</svg>
+    <div>
+      <div style="font-size:56px;line-height:1">${S.order.emoji}${FACE[r.stars]}</div>
+      <p class="react">«${REACT[r.stars]}»</p>
+      <div class="stars" aria-label="${r.stars} stelle su 5">${'★'.repeat(r.stars)}<span class="off">${'★'.repeat(5-r.stars)}</span></div>
+      <span class="earn">+${r.coins} monete${r.tip?` (mancia ${r.tip})`:''}</span>
+      <p class="hint" style="margin-top:12px">La torta è in vetrina, qui sotto.</p>
+      <div class="actions"><button class="btn primary" data-act="next">Prossimo cliente</button></div>
+    </div>
+  </div>`;
+}
+
+function renderGallery(){
+  const g=$('#gallery');
+  if(!save.gallery.length){g.innerHTML='<p class="hint">Le torte che consegni compaiono qui.</p>';return}
+  g.innerHTML=save.gallery.map(x=>`<div class="mini"><svg viewBox="0 0 300 250" aria-hidden="true">${drawCake(x.cake)}</svg>
+    <p><span class="s">${'★'.repeat(x.stars)}</span>${x.stars===0?'—':''}</p><p>${x.emoji} ${x.name}</p></div>`).join('');
+}
+
+function renderMarket(){
+  const card=(kind,id,it)=>{
+    const key=kind+':'+id, own=save.owned.includes(key);
+    const ico=kind==='fr'?`<i style="background:${it.color}"></i>`:kind==='plate'?`<i style="background:${it.fill}"></i>`:(it.e||it.ing);
+    const name=kind==='fr'?it.phrase[0].toUpperCase()+it.phrase.slice(1):kind==='fl'?'Torta '+it.prep:kind==='top'?it.n[0].toUpperCase()+it.n.slice(1):it.name;
+    return `<div class="good ${own?'own':''} ${S.bought===key?'pop':''}"><span class="ico" aria-hidden="true">${ico}</span><b>${name}</b>${it.desc?`<small>${it.desc}</small>`:''}
+      ${own?'<span class="owned">✓ Già tuo</span>':`<button class="btn" data-act="buy" data-v="${key}" ${save.coins<it.price?'disabled':''}>Compra per 🪙 ${it.price}</button>`}</div>`;
+  };
+  $('#market').innerHTML=`<h2>Negozio</h2><p class="hint">Spendi le monete per avere nuove decorazioni, glasse, gusti e attrezzi. Le cose che compri possono comparire anche negli ordini dei clienti. Hai 🪙 ${save.coins} monete.</p>
+    ${SHOP.map(([kind,title,tab])=>`<div class="mgroup"><h3>${title}</h3><div class="goods">${Object.entries(tab).filter(([k,it])=>it.price).map(([k,it])=>card(kind,k,it)).join('')}</div></div>`).join('')}`;
+  S.bought=null;
+}
+function render(){
+  $('#stats').innerHTML=`<span class="stat">🪙 ${save.coins} monete</span><span class="stat">🎂 ${save.served} torte</span>`;
+  renderTicket();
+  const st=$('#stage');
+  st.innerHTML=[renderImpasto,renderForno,renderDecor,renderConsegna][S.step]();
+  if(S.step===1) updateOven();
+  S.stir=false; S.last=null;
+  renderGallery();
+  renderMarket();
+}
+
+function autoSpot(){
+  const c=S.cake, geo=tierGeo(c.tiers||1), top=geo[geo.length-1], slots=[];
+  const k=Math.max(3,Math.floor(top.w/28));
+  for(let i=0;i<k;i++) slots.push({x:top.x+16+i*(top.w-32)/(k-1),y:top.top-8});
+  for(let j=geo.length-1;j>=0;j--){const g=geo[j],m=Math.max(3,Math.floor(g.w/30));
+    for(let i=0;i<m;i++) slots.push({x:g.x+16+i*(g.w-32)/(m-1),y:g.top+g.h/2+6})}
+  const free=slots.find(p=>!c.items.some(it=>Math.abs(it.x-p.x)<14&&Math.abs(it.y-p.y)<14));
+  if(free) return {x:Math.round(free.x),y:Math.round(free.y)};
+  const g=rnd(geo); return {x:Math.round(g.x+16+Math.random()*(g.w-32)),y:Math.round(g.top+10+Math.random()*(g.h-20))};
+}
+function placeItem(t,x,y){S.cake.items.push({t,x,y});S.hist.push('i');S.justAdded=true;render();S.justAdded=false}
+function addSprinkles(){
+  const geo=tierGeo(S.cake.tiers||1);
+  for(let i=0;i<36;i++){const g=rnd(geo);
+    S.cake.sprinkles.push({x:g.x+8+Math.random()*(g.w-22),y:g.top+4+Math.random()*(g.h-12),c:rnd(SPR),r:Math.round(Math.random()*180)})}
+  S.hist.push('s');
+}
+
+let resetArmed=false;
+document.addEventListener('click',e=>{
+  const svg=e.target.closest('#cakeSvg');
+  if(svg&&S.step===2){
+    const r=svg.getBoundingClientRect(); if(!r.width) return;
+    const x=(e.clientX-r.left)/r.width*300, y=(e.clientY-r.top)/r.height*250;
+    if(y>4&&y<240) placeItem(S.tool,Math.round(x),Math.round(y));
+    return;
+  }
+  const b=e.target.closest('[data-act]'); if(!b) return;
+  const a=b.dataset.act,v=b.dataset.v,c=S.cake;
+  if(a!=='reset'&&resetArmed){resetArmed=false;$('#resetBtn').textContent='Ricomincia da capo'}
+  switch(a){
+    case 'flavor': if(c.flavor!==v){c.flavor=v;S.added=S.added.filter(k=>k!=='gusto')} break;
+    case 'ing': if(!S.added.includes(v)){S.added.push(v);S.last=v} break;
+    case 'mix': S.mix=Math.min(100,S.mix+(hasTool('mixer')?25:10));S.stir=true; break;
+    case 'toOven': S.step=1; break;
+    case 'tiers': c.tiers=+v; break;
+    case 'ovenStart': S.oven.running=true;S.oven.level=0;lastT=0;render();raf=requestAnimationFrame(ovenLoop);return;
+    case 'ovenStop': finishOven(); return;
+    case 'ovenRetry': S.oven={running:false,level:0,done:false};c.bake=null; break;
+    case 'toDecor': S.step=2;S.hist=[]; break;
+    case 'frost': c.frosting=v||null; if(!v) c.drip=false; break;
+    case 'drip': c.drip=!c.drip; break;
+    case 'tool': S.tool=v; placeItem(v,...Object.values(autoSpot())); return;
+    case 'plate': c.plate=v; save.plate=v; persist(); break;
+    case 'buy': {const [kind,id]=v.split(':');const tab=SHOP.find(x=>x[0]===kind)[2];const it=tab[id];
+      if(it&&save.coins>=it.price&&!save.owned.includes(v)){save.coins-=it.price;save.owned.push(v);
+        if(kind==='plate'){save.plate=id;c.plate=id}
+        if(kind==='top'&&S.step===2) S.tool=id;
+        persist();S.bought=v}
+      break;}
+    case 'sprinkles': addSprinkles(); break;
+    case 'undo': {const h=S.hist.pop(); if(h==='i') c.items.pop(); else if(h==='s') c.sprinkles.splice(-36,36); break}
+    case 'clearDeco': c.items=[];c.sprinkles=[];S.hist=[]; break;
+    case 'deliver': {
+      const ch=checks(S.order,c); const stars=Math.max(0,Math.min(5,Math.round(ch.points)));
+      const reqN=S.order.tops.reduce((a,r)=>a+r.n,0);
+      const tip=(Math.min(10,Math.max(0,c.items.length-reqN))+(c.sprinkles.length?2:0))*(hasTool('mance')?2:1);
+      const coins=stars*8+(stars>=3?tip:0);
+      S.result={stars,coins,tip:stars>=3?tip:0};
+      save.coins+=coins;save.served+=1;
+      save.gallery.unshift({cake:JSON.parse(JSON.stringify(c)),stars,emoji:S.order.emoji,name:S.order.name});
+      save.gallery=save.gallery.slice(0,24);persist();S.step=3;break;
+    }
+    case 'next': newRound(); window.scrollTo({top:0,behavior:'smooth'}); return;
+    case 'reset':
+      if(!resetArmed){resetArmed=true;b.textContent='Tocca ancora per cancellare tutto';return}
+      resetArmed=false;b.textContent='Ricomincia da capo';
+      save={coins:0,served:0,gallery:[],owned:[]};persist();newRound();return;
+  }
+  render();
+});
+
+newRound();
+</script>
+</body>
+</html>
